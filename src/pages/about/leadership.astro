@@ -1,0 +1,72 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/layout/Header.astro";
+import Footer from "../../components/layout/Footer.astro";
+import PageBanner from "../../components/sections/PageBanner.astro";
+import BoardGrid from "../../components/sections/BoardGrid.astro";
+import AlumniGrid from "../../components/sections/AlumniGrid.astro";
+
+import { siteName, siteDescription, logo, flat_logo, navItems } from "../../config/site";
+import { heading, members, alumniHeading } from "../../data/leadership";
+import { slugifyName } from "../../lib/slug";
+
+const currentMembers = members.filter((member) => !member.isAlumni);
+const alumniMembers = members.filter((member) => member.isAlumni);
+
+// Per-person entities for search: ItemList of Person with deep-link
+// URLs (#slug) matching the BoardCard anchors. Only members with a
+// real photo are listed, mirroring what the grids render.
+const siteOrigin = "https://binghamfamilyclinic.org";
+const listedMembers = members.filter(
+  (member) => member.image && !member.image.toLowerCase().includes("placeholder")
+);
+const peopleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  itemListElement: listedMembers.map((member, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Person",
+      name: member.name,
+      jobTitle: member.title,
+      image: `${siteOrigin}${member.image}`,
+      url: `${siteOrigin}/about/leadership#${slugifyName(member.name)}`,
+      description:
+        member.roleExplanation ??
+        member.bio.split("\n").filter(Boolean)[0] ??
+        "",
+      worksFor: { "@type": "Organization", name: siteName, url: siteOrigin },
+    },
+  })),
+};
+---
+
+<BaseLayout
+  title="Clinic Leadership Team"
+  description="Meet the doctors, directors and coordinators leading free patient care at Bingham Family Clinic in Orem, UT."
+  siteName={siteName}
+>
+  <Header navItems={navItems} slot="header">
+    <a slot="logo" href="/" aria-label={`${siteName} home`}>
+      <img src={flat_logo.src} alt={flat_logo.alt} class="site-logo" />
+    </a>
+  </Header>
+
+  <PageBanner heading={heading} />
+
+  <script type="application/ld+json" set:html={JSON.stringify(peopleJsonLd)} />
+
+  <BoardGrid members={currentMembers} bioLabel="Why I serve" />
+
+  <AlumniGrid heading={alumniHeading} members={alumniMembers} bioLabel="Why I serve" />
+
+  <Footer navItems={navItems} slot="footer" />
+</BaseLayout>
+
+<style>
+  .site-logo {
+    height: 5rem;
+    width: auto;
+  }
+</style>

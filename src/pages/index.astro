@@ -1,0 +1,70 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+import Hero from "../components/sections/Hero.astro";
+import StatsBar from "../components/sections/StatsBar.astro";
+import Mission from "../components/sections/Mission.astro";
+import Eligibility from "../components/sections/Eligibility.astro";
+import DonorRecognition from "../components/sections/DonorRecognition.astro";
+
+import { siteName, logo, flat_logo, navItems } from "../config/site";
+import { hero, stats, mission, eligibility } from "../data/home";
+import { donorRecognition } from "../data/donors";
+---
+
+<BaseLayout
+  title="Free Clinic in Orem, UT"
+  description="Bingham Family Clinic provides free medical, dental, pharmacy and lab care for Utah County families. Request an appointment in Orem, UT."
+  siteName={siteName}
+>
+  <Header navItems={navItems} slot="header">
+    <a slot="logo" href="/" aria-label={`${siteName} home`}>
+      <img src={flat_logo.src} alt={flat_logo.alt} class="site-logo" />
+    </a>
+  </Header>
+
+  <Hero
+    backgroundImage={hero.backgroundImage}
+    heading={hero.heading}
+    subheading={hero.subheading}
+    ctaText={hero.ctaText}
+    ctaHref={hero.ctaHref}
+  />
+  {/*  
+  <StatsBar stats={stats} />
+  */}
+  <Eligibility
+    heading={eligibility.heading}
+    subheading={eligibility.subheading}
+    criteria={eligibility.criteria}
+    tableCaption={eligibility.tableCaption}
+    tableColumns={eligibility.tableColumns}
+    tableRows={eligibility.tableRows}
+    noteText={eligibility.noteText}
+    policyLinkText={eligibility.policyLinkText}
+    policyLinkHref={eligibility.policyLinkHref}
+  />  
+  <Mission
+    backgroundImage={mission.backgroundImage}
+    heading={mission.heading}
+    statement={mission.statement}
+    tagline={mission.tagline}
+    ctaText={mission.ctaText}
+    ctaHref={mission.ctaHref}
+  />
+  <DonorRecognition
+    heading={donorRecognition.heading}
+    subheading={donorRecognition.subheading}
+    names={donorRecognition.names}
+  />
+  <Footer navItems={navItems} slot="footer" />
+
+</BaseLayout>
+
+<style>
+  .site-logo {
+    height: 5rem;
+    width: auto;
+  }
+</style>

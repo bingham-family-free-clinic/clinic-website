@@ -1,0 +1,47 @@
+import type { NavItem } from "../types";
+
+/**
+ * Site-wide configuration.
+ * Single source of truth for the site name, logo, and primary navigation.
+ * Header, Footer, and BaseLayout all read from here so a nav or branding
+ * change only has to happen in one place.
+ */
+
+export const siteName = "Bingham Family Clinic";
+
+export const siteDescription =
+  "Free, community-focused healthcare for families in Utah County.";
+
+export const logo = {
+  src: "/images/image3.webp",
+  alt: "Bingham Family Clinic",
+};
+
+export const flat_logo = {
+  src: "/images/image4.webp",
+  alt: "Bingham Family Clinic",
+}
+
+/**
+ * Default social share image (Open Graph / Twitter), used by
+ * BaseLayout when a page doesn't pass its own `ogImage`. Clinic
+ * waiting room photo; dimensions are the real file dimensions.
+ */
+export const defaultOgImage = {
+  src: "/images/image2.webp",
+  alt: "Waiting room at Bingham Family Clinic",
+  width: 4279,
+  height: 2853,
+};
+
+/**
+ * Primary navigation, used by the header (desktop + mobile).
+ * All entries point at live routes — keep it that way when adding pages.
+ */
+export const navItems: NavItem[] = [
+  { label: "About", href: "/about" },
+  { label: "Classes", href: "/classes" },
+  { label: "Donate", href: "/donate" },
+  { label: "Volunteer", href: "/volunteer" },
+  { label: "Appointments", href: "/appointments" },
+];
