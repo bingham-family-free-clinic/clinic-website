@@ -91,6 +91,12 @@ const ROLES = [
   "Communications",
 ];
 
+// Display-only overrides. The key is the stored value (what gets submitted);
+// the value is what the applicant sees. Roles not listed show as-is.
+const ROLE_LABELS: Record<string, string> = {
+  "Patient Navigator": "Patient Navigator (Interpreting)",
+};
+
 const CERTIFICATIONS = [
   "CPR",
   "BLS",
@@ -363,7 +369,7 @@ const EXPERIENCE_MAX_WORDS = 100;
                         <path d="m5 13 4 4L19 7" />
                       </svg>
                     </span>
-                    <span class="option-label-text">{role}</span>
+                    <span class="option-label-text">{ROLE_LABELS[role] ?? role}</span>
                   </label>
                 );
               })
