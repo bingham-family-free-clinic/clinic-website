@@ -18,7 +18,7 @@ export const volunteerRoles: RoleItem[] = [
   {
     title: "Patient Navigator",
     description:
-      "Do you speak a second language? Share your skills and volunteer as a Patient Navigator! Patient Navigators serve as interpreters and advocates, bridging communication between non-English speaking patients and medical providers throughout their care. They reduce language barriers, safeguard patient comprehension, and ensure clear understanding of treatment plans and next steps.",
+      "Patient Navigators serve as interpreters and advocates, bridging communication between non-English speaking patients and medical providers throughout their care. They reduce language barriers, safeguard patient comprehension, and ensure clear understanding of treatment plans and next steps.",
   },
   {
     title: "Support Center",
