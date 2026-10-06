@@ -21,12 +21,14 @@ export interface ClassItem {
 }
 
 export const classes: ClassItem[] = [
+  /*
   {
     image: "/images/image3.webp",
     title: "Nutrition and Diabetes Care",
     description:
       "Join us for this ongoing class, held on the third Wednesday of each month at 5:00 PM—we'd love to have you there! Call 801-854-5168 to reserve your spot.",
   },
+  */
   {
     image: "/images/image3.webp",
     title: "Exercise and Physiology Class",
