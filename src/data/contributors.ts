@@ -46,7 +46,7 @@ export const members: TeamMember[] = [
     // isAlumni: true,
   },
   {
-    name: "Trey Jones",
+    name: "Trey Jones, CMI-Spanish",
     title: "Patient Navigator Trainer",
     image: "/images/trey_jones.webp",
     bio: "WHY: I believe the center of equitable healthcare begins with equal access to language services regardless of English proficiency. Leading the Patient Navigator Program allows volunteers to bridge the linguistic, cultural, and familiarity gaps in a professional and compassionate manner.",
