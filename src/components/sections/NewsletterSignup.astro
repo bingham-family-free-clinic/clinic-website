@@ -22,7 +22,6 @@ interface Props {
   emailPlaceholder: string;
   buttonText: string;
   loadingText: string;
-  privacyNote?: string;
   successHeading: string;
   successMessage: string;
   errorMessage: string;
@@ -36,7 +35,6 @@ const {
   emailPlaceholder,
   buttonText,
   loadingText,
-  privacyNote,
   successHeading,
   successMessage,
   errorMessage,
@@ -84,7 +82,6 @@ const {
       </form>
 
       <div id="newsletter-error" class="field-error form-error newsletter__error" role="alert" hidden></div>
-      {privacyNote && <p class="field-hint newsletter__note">{privacyNote}</p>}
     </div>
 
     <div id="newsletter-success" class="newsletter__success" hidden tabindex="-1">
