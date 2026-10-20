@@ -1,0 +1,249 @@
+---
+import Section from "../ui/Section.astro";
+
+/**
+ * NewsletterSignup
+ * Monthly newsletter signup, placed at the bottom of the homepage between
+ * the donor recognition section and the footer. Copy comes from
+ * `data/newsletter.ts`.
+ *
+ * Like VolunteerApplicationForm, this submits straight to Supabase from the
+ * browser (the site is statically rendered — see CLAUDE.md). It calls the
+ * `subscribe_newsletter` database function rather than inserting into the
+ * table directly, so anonymous visitors can add an email but can never read
+ * the list. Requires PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY (see
+ * src/lib/supabase.ts) and the SQL in newsletter_campaign.sql.
+ */
+
+interface Props {
+  heading: string;
+  subheading?: string;
+  emailLabel: string;
+  emailPlaceholder: string;
+  buttonText: string;
+  loadingText: string;
+  successHeading: string;
+  successMessage: string;
+  errorMessage: string;
+  invalidEmailMessage: string;
+}
+
+const {
+  heading,
+  subheading,
+  emailLabel,
+  emailPlaceholder,
+  buttonText,
+  loadingText,
+  successHeading,
+  successMessage,
+  errorMessage,
+  invalidEmailMessage,
+} = Astro.props;
+---
+
+<Section id="newsletter">
+  <div
+    class="newsletter"
+    data-loading-text={loadingText}
+    data-button-text={buttonText}
+    data-error-message={errorMessage}
+    data-invalid-message={invalidEmailMessage}
+  >
+    <div class="newsletter__intro">
+      <h2>{heading}</h2>
+      {subheading && <p class="text-muted">{subheading}</p>}
+    </div>
+
+    <div id="newsletter-form-view">
+      <form id="newsletter-form" class="newsletter__form" novalidate>
+        <div class="field newsletter__field">
+          <label for="newsletter-email">{emailLabel}</label>
+          <input
+            id="newsletter-email"
+            name="email"
+            type="email"
+            placeholder={emailPlaceholder}
+            autocomplete="email"
+            maxlength="254"
+            required
+          />
+        </div>
+
+        <!-- Honeypot: hidden from people, bots fill it in. -->
+        <div class="newsletter__trap" aria-hidden="true">
+          <label for="newsletter-website">Website</label>
+          <input id="newsletter-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <button type="submit" id="newsletter-submit" class="button button--primary newsletter__submit">
+          {buttonText}
+        </button>
+      </form>
+
+      <div id="newsletter-error" class="field-error form-error newsletter__error" role="alert" hidden></div>
+    </div>
+
+    <div id="newsletter-success" class="newsletter__success" hidden tabindex="-1">
+      <div class="newsletter__success-icon" aria-hidden="true">✓</div>
+      <h3>{successHeading}</h3>
+      <p class="text-muted">{successMessage}</p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .newsletter {
+    max-width: var(--container-narrow-width);
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .newsletter__intro {
+    margin-bottom: var(--space-lg);
+  }
+
+  .newsletter__intro h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .newsletter__form {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-sm);
+    max-width: 32rem;
+    margin-inline: auto;
+    text-align: left;
+  }
+
+  .newsletter__field {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .newsletter__submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .newsletter__trap {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .newsletter__note {
+    margin-top: var(--space-sm);
+  }
+
+  .newsletter__error {
+    max-width: 32rem;
+    margin: var(--space-sm) auto 0;
+    background-color: #fdf0ef;
+    border: 1px solid #b3261e;
+    border-radius: var(--radius-sm);
+    padding: var(--space-sm) var(--space-md);
+    text-align: left;
+  }
+
+  /* Same display fix as the volunteer form: author `display` rules would
+     otherwise beat the browser's [hidden] rule. */
+  .newsletter__error[hidden],
+  .newsletter__success[hidden],
+  #newsletter-form-view[hidden] {
+    display: none !important;
+  }
+
+  .newsletter__success {
+    padding-block: var(--space-md);
+  }
+
+  .newsletter__success-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto var(--space-md);
+    border-radius: var(--radius-full);
+    background-color: #1a7a4a;
+    color: var(--color-text-inverse);
+    font-size: var(--font-size-h4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .newsletter__success h3 {
+    margin-bottom: var(--space-xs);
+  }
+
+  /* Breakpoint: md (768px) — matches the stacking breakpoint used
+     elsewhere in the project. */
+  @media (max-width: 768px) {
+    .newsletter__form {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>
+
+<script>
+  import { supabase } from "../../lib/supabase";
+
+  const root = document.querySelector<HTMLElement>(".newsletter");
+  const form = document.getElementById("newsletter-form") as HTMLFormElement | null;
+  const formView = document.getElementById("newsletter-form-view") as HTMLDivElement | null;
+  const successView = document.getElementById("newsletter-success") as HTMLDivElement | null;
+  const errorBanner = document.getElementById("newsletter-error") as HTMLDivElement | null;
+  const submitButton = document.getElementById("newsletter-submit") as HTMLButtonElement | null;
+
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  if (root && form && formView && successView && errorBanner && submitButton) {
+    const loadingText = root.dataset.loadingText ?? "Subscribing…";
+    const buttonText = root.dataset.buttonText ?? "Subscribe";
+    const errorMessage = root.dataset.errorMessage ?? "Something went wrong.";
+    const invalidMessage = root.dataset.invalidMessage ?? "Please enter a valid email address.";
+
+    function showError(message: string) {
+      errorBanner!.textContent = message;
+      errorBanner!.hidden = false;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      errorBanner.hidden = true;
+
+      const data = new FormData(form);
+      const email = String(data.get("email") ?? "").trim().toLowerCase();
+
+      // Honeypot filled in: pretend it worked, send nothing.
+      if (String(data.get("website") ?? "") !== "") {
+        formView.hidden = true;
+        successView.hidden = false;
+        return;
+      }
+
+      if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
+        showError(invalidMessage);
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = loadingText;
+
+      const { error } = await supabase.rpc("subscribe_newsletter", { p_email: email });
+
+      if (error) {
+        showError(errorMessage);
+        submitButton.disabled = false;
+        submitButton.textContent = buttonText;
+        return;
+      }
+
+      formView.hidden = true;
+      successView.hidden = false;
+      successView.focus();
+    });
+  }
+</script>

@@ -245,6 +245,15 @@ Two form patterns exist — don't mix them:
 - `CustomForm.astro` is an unused skeleton — nothing references it.
   Don't wire it into a page; use one of the two patterns above.
 
+## Legal pages
+
+`/privacy` and `/terms-of-service` are single-file routes
+(`src/pages/privacy.astro`, `src/pages/terms-of-service.astro`) that
+compose `PageBanner` + `sections/LegalDocument.astro`. All copy lives in
+`src/data/legal.ts` (`privacy`, `terms`, shared `legalContact`) — edit
+the wording there and bump `lastUpdated`. The footer links to both from
+`legalLinks` in `src/config/footer.ts`.
+
 ## Donate page
 
 `src/pages/donate/` follows the same nested-route pattern as

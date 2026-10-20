@@ -7,10 +7,12 @@ import StatsBar from "../components/sections/StatsBar.astro";
 import Mission from "../components/sections/Mission.astro";
 import Eligibility from "../components/sections/Eligibility.astro";
 import DonorRecognition from "../components/sections/DonorRecognition.astro";
+import NewsletterSignup from "../components/sections/NewsletterSignup.astro";
 
 import { siteName, logo, flat_logo, navItems } from "../config/site";
 import { hero, stats, mission, eligibility } from "../data/home";
 import { donorRecognition } from "../data/donors";
+import { newsletterSignup } from "../data/newsletter";
 ---
 
 <BaseLayout
@@ -57,6 +59,19 @@ import { donorRecognition } from "../data/donors";
     heading={donorRecognition.heading}
     subheading={donorRecognition.subheading}
     names={donorRecognition.names}
+  />
+  <NewsletterSignup
+    heading={newsletterSignup.heading}
+    subheading={newsletterSignup.subheading}
+    emailLabel={newsletterSignup.emailLabel}
+    emailPlaceholder={newsletterSignup.emailPlaceholder}
+    buttonText={newsletterSignup.buttonText}
+    loadingText={newsletterSignup.loadingText}
+    privacyNote={newsletterSignup.privacyNote}
+    successHeading={newsletterSignup.successHeading}
+    successMessage={newsletterSignup.successMessage}
+    errorMessage={newsletterSignup.errorMessage}
+    invalidEmailMessage={newsletterSignup.invalidEmailMessage}
   />
   <Footer navItems={navItems} slot="footer" />
 

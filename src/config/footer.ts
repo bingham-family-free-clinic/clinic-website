@@ -38,6 +38,15 @@ export const socialLinks: SocialLink[] = [
 export const tagline = "Made with love for our community";
 
 /**
+ * Legal links shown in the footer's bottom bar, next to the copyright
+ * line. Add or reorder entries here; Footer.astro renders them as-is.
+ */
+export const legalLinks: { label: string; href: string }[] = [
+  { label: "Privacy Statement", href: "/privacy" },
+  { label: "Terms of Use", href: "/terms-of-service" },
+];
+
+/**
  * Upcoming closures.
  *
  * Each entry is a single date, or a range if `endDate` is set:

@@ -1,0 +1,106 @@
+---
+import Section from "../ui/Section.astro";
+import { legalContact, type LegalDocument } from "../../data/legal";
+
+/**
+ * LegalDocument
+ * Renders a long-form legal document (Terms of Use, Privacy Statement)
+ * from structured data in `src/data/legal.ts`: a "Last updated" line
+ * followed by numbered sections of paragraphs, bullet lists, and the
+ * clinic contact block.
+ */
+
+interface Props {
+  doc: LegalDocument;
+}
+
+const { doc } = Astro.props;
+---
+
+<Section narrow>
+  <article class="legal">
+    <p class="legal__updated text-small">Last Updated: {doc.lastUpdated}</p>
+
+    {
+      doc.sections.map((section) => (
+        <section class="legal__section">
+          <h2 class="legal__heading">{section.heading}</h2>
+          {section.blocks.map((block) => {
+            if (block.type === "p") return <p>{block.text}</p>;
+            if (block.type === "ul")
+              return (
+                <ul class="legal__list">
+                  {block.items.map((item) => (
+                    <li>
+                      {item.label && <strong>{item.label}</strong>} {item.text}
+                    </li>
+                  ))}
+                </ul>
+              );
+            return (
+              <address class="legal__contact">
+                <strong>{legalContact.name}</strong>
+                <br />
+                {legalContact.addressLines.map((line) => (
+                  <>
+                    {line}
+                    <br />
+                  </>
+                ))}
+                Phone: <a href={legalContact.phoneHref}>{legalContact.phone}</a>
+                <br />
+                Email: <a href={`mailto:${legalContact.email}`}>{legalContact.email}</a>
+                <br />
+                Website: <a href={legalContact.website}>{legalContact.website}</a>
+              </address>
+            );
+          })}
+        </section>
+      ))
+    }
+  </article>
+</Section>
+
+<style>
+  .legal__updated {
+    margin-bottom: var(--space-lg);
+  }
+
+  .legal__section + .legal__section {
+    margin-top: var(--space-xl);
+  }
+
+  .legal__heading {
+    font-size: var(--font-size-h4);
+    margin-bottom: var(--space-sm);
+  }
+
+  .legal__section p + p,
+  .legal__section p + .legal__list,
+  .legal__list + p,
+  .legal__section p + .legal__contact {
+    margin-top: var(--space-sm);
+  }
+
+  .legal__list {
+    list-style: disc;
+    padding-left: var(--space-md);
+  }
+
+  .legal__list li {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    color: var(--color-text);
+  }
+
+  .legal__list li + li {
+    margin-top: var(--space-2xs);
+  }
+
+  .legal__contact {
+    font-style: normal;
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    overflow-wrap: anywhere;
+  }
+</style>

@@ -71,15 +71,15 @@ export const members: TeamMember[] = [
     // isAlumni: true,
   },
   {
-    name: "Aubrey Monk",
+    name: "Aubrey Taylor Munk, PA-C",
     title: "Clinic Director",
     image: "/images/aubrey_monk.webp",
-    bio: "Aubrey is a Physician Assistant who practices family medicine and serves as the Clinic Director at Bingham Family Clinic. She earned her Master of Physician Assistant Studies from Utah Valley University and enjoys caring for patients of all ages and backgrounds. She has special interest and experience in dermatology and women’s health. Aubrey is especially grateful to practice at Bingham Family Clinic, where she is passionate about providing accessible, compassionate healthcare to members of the community who may otherwise face barriers to care. She believes every patient deserves to be treated with dignity, respect, and compassion. Outside of medicine, Aubrey enjoys trying new things, spending time with her family, hiking with her dog, and traveling with her husband. She enjoys learning, meeting new people, and finding new ways to grow both personally and professionally. She is excited to be part of the Bingham Family Clinic team and looks forward to serving the community. ",
+    bio: "I have always felt a pull to be involved in caring for others. I think if everyone spent more of their time in the service of others, the world would be a much better place. I also strongly believe everyone deserves access to compassionate, quality healthcare,regardless of their circumstances. BFC gives me the opportunity to build meaningful relationships with patients, support their health, and help make a positive difference in my own community.",
     roleExplanation: "Leads the clinic's day-to-day operations and clinical programs, ensuring effective, high-quality patient care.",
     // isAlumni: true,
   },
   {
-    name: "Kristen Skinner",
+    name: "Kristen Skinner, MLS",
     title: "Lab Director",
     image: "/images/kristen_skinner.webp",
     bio: "WHY: I strongly believe that quality, reliable healthcare should be available to anyone who needs it. Having worked as a medical laboratory scientist in hospital, educational, and clinic settings I’ve seen firsthand how important lab values are in making healthcare decisions. Because of this two of my passions are medical laboratory science and healthcare education. At the Bingham Family Clinic I can extend that passion into something that brings value to the community around me.",
