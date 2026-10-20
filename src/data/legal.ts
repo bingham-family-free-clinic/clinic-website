@@ -229,7 +229,7 @@ export const privacy: LegalDocument = {
         {
           type: "ul",
           items: [
-            { label: "Website hosting:", text: "GoDaddy." },
+            { label: "Website hosting:", text: "Vercel." },
             {
               label: "Appointment requests and provider applications:",
               text: "Microsoft Forms.",
