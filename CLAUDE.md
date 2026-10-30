@@ -116,7 +116,7 @@ Key images are referenced by path and are expected at:
 - `public/images/image4.webp` — flat logo variant (`flat_logo` in
   `src/config/site.ts`), used in the header and footer on most pages
 - `public/images/volunteer-hero.webp` — volunteer page hero background
-- `public/images/volunteer-why.webp` — "Why Volunteer" section photo
+- `public/images/lab_volunteer.webp` — "Why Volunteer" section photo
 - `public/images/venmo-qr.webp` — Venmo QR code shown on the donate page
 - `public/images/<name>.webp` — board/leadership/contributor portraits
   (e.g. `kirk.webp`, `sherilee.webp`); a member whose `image` is still

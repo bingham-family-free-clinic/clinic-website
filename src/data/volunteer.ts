@@ -22,7 +22,7 @@ export interface Benefit {
 
 export const why = {
   // Placeholder path — add the real photo to public/images and update this.
-  image: "/images/lab_volunteer.JPG",
+  image: "/images/lab_volunteer.webp",
   heading: "Why Volunteer With Us?",
   benefits: [
     {
@@ -59,9 +59,9 @@ export interface VolunteerPhoto {
 }
 
 export const photos: VolunteerPhoto[] = [
-  { src: "/images/volunteer4.JPG", alt: "Volunteers serving at Bingham Family Clinic" },
-  { src: "/images/volunteer2.JPG", alt: "Volunteers serving at Bingham Family Clinic" },
-  { src: "/images/volunteer3.JPG", alt: "Volunteers serving at Bingham Family Clinic" },
+  { src: "/images/volunteer4.webp", alt: "Volunteers serving at Bingham Family Clinic" },
+  { src: "/images/volunteer2.webp", alt: "Volunteers serving at Bingham Family Clinic" },
+  { src: "/images/volunteer3.webp", alt: "Volunteers serving at Bingham Family Clinic" },
 ];
 
 export const apply = {

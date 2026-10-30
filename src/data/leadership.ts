@@ -101,13 +101,21 @@ export const members: TeamMember[] = [
     bio: "WHY: I have always loved the healthcare field because of its ability to lift people up and change lives. Small acts of service can make someone feel cared for, supported, and valued. Every small thing we do in the clinic makes a real impact on both our patients and our volunteers. Through serving here, I have seen the growth of others as well as my own. I feel so grateful to be a part of the good work being done here at the clinic and to experience the joy that comes from it.",
     roleExplanation: "Oversees volunteer recruitment, onboarding, records, and personnel processes to support an effective and engaged workforce.",
     // isAlumni: true,
-  },  
+  },
   {
     name: "Joshua Kent",
     title: "Systems Coordinator",
     image: "/images/joshua_kent.webp",
     bio: "WHY: This is a valuable opportunity to give back to my hometown. I've seen first hand the difference the clinic has made in many lives—patients, volunteers, and mine. I'm invested in the mission, because I want to expand these opportunities for others.",
     roleExplanation: "Oversees the clinic's technology, information systems, data, and other operational support functions to improve efficiency and organizational effectiveness.",
+    // isAlumni: true,
+  },    
+  {
+    name: "Clark Rowley",
+    title: "Communications Coordinator",
+    image: "/images/clark_rowley.png",
+    bio: "",
+    roleExplanation: "Manages the clinic's communications, including public relations, social media, and community outreach to ensure consistent and effective information dissemination.",
     // isAlumni: true,
   },
   {

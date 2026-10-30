@@ -5,7 +5,7 @@
  */
 
 export const hero = {
-  backgroundImage: "/images/image13.JPG",
+  backgroundImage: "/images/image13.webp",
   heading: "Why Donate?",
   quote: {
     text:
