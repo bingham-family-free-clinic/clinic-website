@@ -158,7 +158,18 @@ const EXPERIENCE_MAX_WORDS = 100;
         <div class="form-row">
           <div class="field">
             <label for="email">Email *</label>
-            <input id="email" name="email" type="email" placeholder="justalias@email.com" required />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="justalias@email.com"
+              autocomplete="email"
+              aria-describedby="email-error"
+              required
+            />
+            <p id="email-error" class="field-error" role="alert" hidden>
+              Please enter a valid email address (e.g. name@example.com).
+            </p>
           </div>
           <div class="field">
             <label for="phone">Phone *</label>
@@ -381,10 +392,10 @@ const EXPERIENCE_MAX_WORDS = 100;
 
       <!-- ── Shift Availability ── -->
       <fieldset class="form-section">
-        <legend class="label">Shift Availability</legend>
-        <p class="field-hint shift-hint">Select all shifts you're available for.</p>
+        <legend class="label">Shift Availability *</legend>
+        <p class="field-hint shift-hint">Select all shifts you're available for (at least one is required).</p>
 
-        <table class="shift-grid">
+        <table class="shift-grid" id="shift-grid">
           <thead>
             <tr>
               <th scope="col"><span class="visually-hidden">Day</span></th>
@@ -424,6 +435,9 @@ const EXPERIENCE_MAX_WORDS = 100;
             }
           </tbody>
         </table>
+        <p id="shift-error" class="field-error" role="alert" hidden>
+          Please select at least one shift you're available for.
+        </p>
 
         <div class="field">
           <label for="expected-duration">How long do you expect to volunteer? *</label>
@@ -556,6 +570,14 @@ const EXPERIENCE_MAX_WORDS = 100;
    */
   .conditional-field[hidden] {
     display: none !important;
+  }
+
+  .field-error[hidden] {
+    display: none !important;
+  }
+
+  #email[aria-invalid="true"] {
+    border-color: #b3261e;
   }
 
   .shift-grid {
@@ -842,9 +864,69 @@ const EXPERIENCE_MAX_WORDS = 100;
       .map((cb) => cb.value);
   }
 
+  // ── Validation ──
+  // The form uses `novalidate`, so the browser won't enforce `required` or
+  // `type="email"` — we check the fields that must be correct ourselves.
+  const emailInput = document.getElementById("email") as HTMLInputElement;
+  const emailError = document.getElementById("email-error") as HTMLParagraphElement;
+  const shiftError = document.getElementById("shift-error") as HTMLParagraphElement;
+  const shiftCheckboxes = form.querySelectorAll<HTMLInputElement>(".shift-checkbox");
+
+  // Requires something@something.tld with no spaces. Stricter than the
+  // browser's built-in type="email" check, which accepts "me@localhost".
+  const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function isValidEmail(value: string): boolean {
+    return EMAIL_PATTERN.test(value.trim());
+  }
+
+  function hasAnyShift(): boolean {
+    return Array.from(shiftCheckboxes).some((cb) => cb.checked);
+  }
+
+  function validateEmail(): boolean {
+    const ok = isValidEmail(emailInput.value);
+    emailError.hidden = ok;
+    emailInput.setAttribute("aria-invalid", String(!ok));
+    return ok;
+  }
+
+  function validateShifts(): boolean {
+    const ok = hasAnyShift();
+    shiftError.hidden = ok;
+    return ok;
+  }
+
+  // Clear/refresh the messages as the person fixes things. Email waits until
+  // blur to first complain (so it doesn't nag mid-typing), then re-checks live.
+  emailInput.addEventListener("blur", () => {
+    if (emailInput.value.trim() !== "") validateEmail();
+  });
+  emailInput.addEventListener("input", () => {
+    if (!emailError.hidden) validateEmail();
+  });
+  shiftCheckboxes.forEach((cb) =>
+    cb.addEventListener("change", () => {
+      if (!shiftError.hidden) validateShifts();
+    }),
+  );
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     errorBanner.hidden = true;
+
+    const emailOk = validateEmail();
+    const shiftsOk = validateShifts();
+    if (!emailOk || !shiftsOk) {
+      // Jump to the first problem so it's not missed on long forms.
+      if (!emailOk) {
+        emailInput.focus();
+      } else {
+        document.getElementById("shift-grid")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      return;
+    }
+
     setLoading("Uploading resume…");
 
     const formData = new FormData(form);
@@ -890,7 +972,7 @@ const EXPERIENCE_MAX_WORDS = 100;
     setLoading("Submitting…");
     const { error: insertError } = await supabase.from("volunteer_applications").insert({
       full_name: fullName,
-      email: formData.get("email"),
+      email: String(formData.get("email") ?? "").trim(),
       phone: formData.get("phone"),
       school: school && school !== "" ? school : null,
       program: formData.get("program") || null,
