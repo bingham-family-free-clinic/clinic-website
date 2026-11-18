@@ -109,7 +109,7 @@ export const members: TeamMember[] = [
   },
   {
     name: "Joshua Kent",
-    title: "Former Systems Coordinator",
+    title: "Systems Coordinator",
     image: "/images/joshua_kent.webp",
     bio: "WHY: This is a valuable opportunity to give back to my hometown. I've seen first hand the difference the clinic has made in many lives—patients, volunteers, and mine. I'm invested in the mission, because I want to expand these opportunities for others.",
     roleExplanation: "Oversaw the clinic's technology, information systems, data, and other operational support functions to improve efficiency and organizational effectiveness.",
