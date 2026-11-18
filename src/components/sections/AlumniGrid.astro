@@ -49,7 +49,7 @@ const membersWithPhoto = members.filter(
 ---
 
 {membersWithPhoto.length > 0 && (
-  <Section background="muted">
+  <Section background="primary">
     <details class="alumni-grid__details">
       <summary class="alumni-grid__heading">{heading}</summary>
       <div class="alumni-grid">
@@ -69,6 +69,9 @@ const membersWithPhoto = members.filter(
 <style>
   .alumni-grid__details {
     width: 100%;
+    /* Section sits on the dark primary band, so the default focus ring
+       (primary-light) would vanish — use white for focus / #deep-link outlines. */
+    --color-focus-ring: var(--color-text-inverse);
   }
 
   .alumni-grid__heading {
@@ -82,6 +85,11 @@ const membersWithPhoto = members.filter(
     align-items: center;
     justify-content: center;
     gap: 0.5em;
+  }
+
+  .alumni-grid__heading:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 4px;
   }
 
   .alumni-grid__heading::-webkit-details-marker {
@@ -103,6 +111,11 @@ const membersWithPhoto = members.filter(
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-lg);
     align-items: start;
+  }
+
+  /* Faint edge so the dark expanded bio doesn't merge into the band. */
+  .alumni-grid :global(.board-card) {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
   }
 
   @media (max-width: 900px) {
