@@ -40,6 +40,8 @@ interface Member {
   bio: string;
   /** Short sentence or two on how this role contributes to the mission. Rendered first as the duties summary. */
   roleExplanation?: string;
+  /** Optional disclosure shown on the closed card (e.g. an alumni who still volunteers). */
+  statusNote?: string;
 }
 
 interface Props {
@@ -63,6 +65,7 @@ const paragraphs = member.bio.split("\n").filter(Boolean);
       </span>
       <h2 class="board-card__name" itemprop="name">{member.name}</h2>
       <p class="board-card__title" itemprop="jobTitle">{member.title}</p>
+      {member.statusNote && <p class="board-card__status-note">{member.statusNote}</p>}
       <span class="board-card__toggle" aria-hidden="true" data-nosnippet>
         <svg class="board-card__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="m6 9 6 6 6-6" />
@@ -151,6 +154,15 @@ const paragraphs = member.bio.split("\n").filter(Boolean);
     color: var(--color-text-muted);
     margin-top: var(--space-3xs);
     margin-bottom: var(--space-md);
+  }
+
+  /* Optional disclosure line (e.g. alumni who still volunteer). Sits between the title and the toggle. */
+  .board-card__status-note {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-small);
+    font-style: italic;
+    line-height: var(--line-height-body);
+    margin: calc(var(--space-md) * -0.5) 0 var(--space-md);
   }
 
   /*

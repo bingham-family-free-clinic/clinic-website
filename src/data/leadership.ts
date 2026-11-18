@@ -16,6 +16,9 @@
  * `bioLabel` prop), so write it in the member's voice, not as a
  * third-person biography.
  *
+ * `statusNote` is optional — a short disclosure shown on the closed card
+ * (e.g. an alumni who still volunteers outside a leadership role).
+ *
  * `roleExplanation` is optional — a short sentence or two on how this
  * person's role contributes to the clinic's mission. It renders inside
  * the card's collapsible bio, so it's only visible once expanded, not
@@ -32,6 +35,8 @@ export interface TeamMember {
   roleExplanation?: string;
   /** Set true to list this person under "Alumni" instead of the current roster. */
   isAlumni?: boolean;
+  /** Short disclosure shown on the card itself (visible without expanding), e.g. an alumni who still volunteers. */
+  statusNote?: string;
 }
 
 export const heading = "Bingham Family Clinic Leadership";
@@ -104,12 +109,13 @@ export const members: TeamMember[] = [
   },
   {
     name: "Joshua Kent",
-    title: "Systems Coordinator",
+    title: "Former Systems Coordinator",
     image: "/images/joshua_kent.webp",
     bio: "WHY: This is a valuable opportunity to give back to my hometown. I've seen first hand the difference the clinic has made in many lives—patients, volunteers, and mine. I'm invested in the mission, because I want to expand these opportunities for others.",
-    roleExplanation: "Oversees the clinic's technology, information systems, data, and other operational support functions to improve efficiency and organizational effectiveness.",
-    // isAlumni: true,
-  },    
+    roleExplanation: "Oversaw the clinic's technology, information systems, data, and other operational support functions to improve efficiency and organizational effectiveness.",
+    statusNote: "Joshua no longer serves in a leadership role but continues to volunteer with the clinic.",
+    isAlumni: true,
+  },
   {
     name: "Clark Rowley",
     title: "Communications Coordinator",
@@ -124,6 +130,14 @@ export const members: TeamMember[] = [
     image: "/images/joseph_tremblay.webp",
     bio: "WHY: I am passionate about serving and helping people in the community. I enjoy using my skills and talents to help and serve others.",
     roleExplanation: "Oversees the clinic's facilities, equipment, and maintenance to ensure a safe, functional, and welcoming environment.",
+    // isAlumni: true,
+  },
+  {
+    name: "Jacob Stuart",
+    title: "Systems Coordinator",
+    image: "/images/jake.png",
+    bio: "WHY: I love healthcare and serving people in our community who need it most. At the Bingham Family Clinic, I get to work alongside dedicated leaders and volunteers aligned under a meaningful mission. I hope to solve the behind-the-scenes challenges that can get in the way of care, so our physicians and volunteers can focus on serving patients. It’s rewarding to use and learn skills to help the clinic provide valuable care.",
+    roleExplanation: "Oversaw the clinic's technology, information systems, data, and other operational support functions to improve efficiency and organizational effectiveness.",
     // isAlumni: true,
   },
 ];
