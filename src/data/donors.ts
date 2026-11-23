@@ -24,5 +24,13 @@ export const donorRecognition = {
     "Rimrock Construction",
     "Randy & Linda Dearth",
     "Naum Vucak Plumbing",
+    "xTool",
+    "David & Deborah Sheets",
+    "Cardell K. Jacobsen",
+    "Austin & Chelsey Anderson",
+    "Michael McKay",
+    "Randy & Jill Tolman Foundation",
+    "Walmart Spark Good",
+    "Steven W. Gibson",
   ],
 };
