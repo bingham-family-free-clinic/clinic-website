@@ -13,7 +13,7 @@ export const volunteerRoles: RoleItem[] = [
   {
     title: "Clinical Staff",
     description:
-      "Room patients, and take initial complaints. Work as a clinical team to deliver safe, compassionate, and high-quality healthcare.",
+      "Room patients, and take initial complaints. Document patient encounters in real time to support accurate medical records and provider efficiency. Maintain confidentiality while ensuring documentation is complete and organized. Work as a clinical team to deliver safe, compassionate, and high-quality healthcare.",
   },
   {
     title: "Patient Navigator",
@@ -24,11 +24,6 @@ export const volunteerRoles: RoleItem[] = [
     title: "Support Center",
     description:
       "Manage check-out, assist with patient scheduling, documentation, and resource support. Help ensure every patient has a smooth and positive experience at departure.",
-  },
-  {
-    title: "Scribe",
-    description:
-      "Document patient encounters in real time to support accurate medical records and provider efficiency. Maintain confidentiality while ensuring documentation is complete and organized.",
   },
   {
     title: "Lab",
